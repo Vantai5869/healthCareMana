@@ -32,7 +32,7 @@ const Sidebar = () => {
         <>
           <li>{route.title}</li>
           {route.items.map((item) => (
-            <Link to={item.to} style={{ textDecoration: "none" }}>
+            <Link to={item.to} style={{ textDecoration: "none" }} key={item.label}>
               <li>
                 {item.icon}
                 <span>{item.label}</span>
