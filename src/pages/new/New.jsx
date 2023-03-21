@@ -2,26 +2,53 @@ import "./new.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import UploadFile from "../../components/upload/UploadFile";
+import LocationSelector from "../../components/addressSelect";
+import useUploadFile from "../../stores/actions/useUpload";
+import { ADD_USER } from "../../gql/addUser";
+import { useMutation } from "@apollo/client";
 
 const New = ({ inputs, title }) => {
+  const [addUser,{data:addUserData,loading:loadingAddUser, error}] = useMutation(ADD_USER);
   const [file, setFile] = useState("");
   const [formData, setFormData] = useState();
+  const {upload, data} =useUploadFile();
   const handleSubmit=(e)=>{
     e.preventDefault()
-    const data= {
-      [e.target.lable]:e.target.value
-    }
-    
+    upload({ variables: { file } })
   }
+
+  useEffect(() => {
+   if(data){
+    addUser({
+      variables:{ data:{...formData, avatar: data.uploadSingleFiles.url}}
+    })
+   }
+  }, [data])
+
+  if(error) console.log({error})
+  if(addUserData) console.log({addUserData})
 
   const handleChange=(e)=>{
     setFormData({
-      [e.target.lable]:e.target.value
+      ...formData,
+      [e.target.name]:e.target.value
     })
   }
-  console.log({formData})
+
+const handleChangeAddress = useCallback(
+    (e) => {
+      setFormData({
+        ...formData,
+        ...e
+      })
+
+    },[formData])
+
+console.log('====================================');
+console.log({formData});
+console.log('====================================');
   return (
     <div className="new">
       <Sidebar />
@@ -58,11 +85,12 @@ const New = ({ inputs, title }) => {
               {inputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>
-                  <input type={input.type} placeholder={input.placeholder} onChange={handleChange} />
+                  <input type={input.type} name={input.name} placeholder={input.placeholder} onChange={handleChange} />
                 </div>
               ))}
 
               {/* <UploadFile/> */}
+              <LocationSelector onChangAddress={handleChangeAddress} />
               <button >Send</button>
             </form>
           </div>
