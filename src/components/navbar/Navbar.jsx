@@ -22,6 +22,10 @@ const Navbar = () => {
         <div className="items">
           <div className="item">
             <LanguageOutlinedIcon className="icon" />
+            Chi nhánh 1
+          </div>
+          {/* <div className="item">
+            <LanguageOutlinedIcon className="icon" />
             English
           </div>
           <div className="item">
@@ -29,10 +33,10 @@ const Navbar = () => {
               className="icon"
               onClick={() => dispatch({ type: "TOGGLE" })}
             />
-          </div>
-          <div className="item">
+          </div> */}
+          {/* <div className="item">
             <FullscreenExitOutlinedIcon className="icon" />
-          </div>
+          </div> */}
           <div className="item">
             <NotificationsNoneOutlinedIcon className="icon" />
             <div className="counter">1</div>

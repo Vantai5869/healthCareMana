@@ -29,7 +29,8 @@ function LoginPage() {
   }
   if(data){
     localStorage.setItem('accessToken', data.login.accessToken);
-    console.log({data})
+    localStorage.setItem('user',JSON.stringify(data.login.user));
+    window.location.reload();
   }
 
 

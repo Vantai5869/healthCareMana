@@ -4,8 +4,10 @@ import Navbar from "../../components/navbar/Navbar"
 import Datatable from "../../components/datatable/Datatable"
 import useUserList from "../../stores/actions/users"
 import { useEffect, useState } from "react"
+import useCurrentUser from "../../stores/actions/useCurrentUser"
 
 const UsersList = () => {
+  const {currentUser} = useCurrentUser();
   const [userList, setUserList] = useState([])
   const {data}=useUserList();
  
@@ -14,7 +16,9 @@ const UsersList = () => {
     if(tmp) setUserList(tmp)
   }, [data])
  
-
+console.log('====================================');
+console.log({currentUser});
+console.log('====================================');
   
   return (
     <div className="list">

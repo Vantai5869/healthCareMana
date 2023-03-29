@@ -1,0 +1,45 @@
+
+  .service{
+    .cellWithImg {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    
+        .cellImg {
+          width: 55px;
+          height: 45px;
+          border-radius: 20%;
+          object-fit: cover;
+          margin-right: 20px;
+        }
+    }
+
+    .price{
+        color:rgb(98, 80, 241)
+
+    }
+    .center{
+        margin-top: 3px;
+        text-align: center;
+    }
+    .img-lable{
+        padding: 10px;
+        width: 100%;
+    }
+    .imge-service{
+        display: flex;
+        align-items: center;
+        padding: 10px;
+    }
+    .left {
+        flex: 1;
+        text-align: center;
+        margin-right: 50px;
+        img {
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+  }

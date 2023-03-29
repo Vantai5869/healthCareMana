@@ -7,24 +7,24 @@ import { toast } from 'react-toastify';
 import Layout from "../../components/layout/Layout";
 import Modal from '../../components/modal/Modal';
 import TableLayout from "../../components/tableLayout/TableLayout";
-import { DELETE_BRANCH, FIND_ALL_BRANCHES_BY_MERCHANT, UPDATE_BRANCH } from "../../gql/branch";
+import { DELETE_BRANCH, UPDATE_BRANCH } from "../../gql/service-group";
+import { FIND_ALL_SERVICE_GROUP } from '../../gql/service-group';
 import useCurrentUser from '../../stores/actions/useCurrentUser';
 import { Columns } from './source';
 import './styles.scss';
 
-const Branchs = () => {
+const ServiceGroupPage = () => {
   const [branchs, setBranch] = useState([]);
   const {currentUser} = useCurrentUser();
   const [updateBranch, { loading: updateLoading, error: updateError }] = useMutation(UPDATE_BRANCH);
   const [deleteBranch, { loading: deleteLoading, error: deleteError }] = useMutation(DELETE_BRANCH);
   const [currentBranch, setCurrentBranch] = useState({});
-  const { loading, error, data } = useQuery(FIND_ALL_BRANCHES_BY_MERCHANT, {
-    
+  const { loading, error, data } = useQuery(FIND_ALL_SERVICE_GROUP, {
     variables: { merchantId: currentUser?.merchants.edges[0].node.id },
   });
 
   useEffect(() => {
-    const tmp = data ? data.findAllBranchesByMerchant.edges.map(
+    const tmp = data ? data.findAllServiceGroups.edges.map(
       i => i.node
     ) : []
     setBranch(tmp)
@@ -60,8 +60,8 @@ const Branchs = () => {
       variables: {
         id: currentBranch.id, data: {
           name: currentBranch.name,
-          address: currentBranch.address,
-          phone: currentBranch.phone,
+          description: currentBranch.description,
+          showType: currentBranch.showType,
         }
       }
     })
@@ -92,8 +92,8 @@ const Branchs = () => {
 
                 <div className='modal-view-branch' style={{ width: 500, paddingBottom: 50 }}>
                   <TextField name="name" label="Name" fullWidth value={currentBranch.name} onChange={handleChange} />
-                  <TextField name="phone" label="Phone" fullWidth value={currentBranch.phone} onChange={handleChange} />
-                  <TextField name="address" label="Address" fullWidth value={currentBranch.address} onChange={handleChange} />
+                  <TextField name="description" label="Mô tả" fullWidth value={currentBranch.description} onChange={handleChange} />
+                  <TextField name="showType" label="Mục hiển thị" type={'number'} fullWidth value={currentBranch.showType} onChange={handleChange} />
 
                 </div>
                 <Button sx={{ marginLeft: "auto" }} variant="contained" color="primary" onClick={handleUpdateBranch} >
@@ -119,7 +119,7 @@ const Branchs = () => {
       <div className='branch'>
         {
           loading ? <p>Loading...</p> :
-            <TableLayout linkAddNew="/branch/new">
+            <TableLayout linkAddNew="/service-group/new">
               <DataGrid
                 className="datagrid"
                 rows={branchs}
@@ -137,4 +137,4 @@ const Branchs = () => {
   )
 }
 
-export default Branchs
+export default ServiceGroupPage

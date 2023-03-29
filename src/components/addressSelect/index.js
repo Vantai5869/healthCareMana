@@ -41,7 +41,7 @@ function LocationSelector({onChangAddress}) {
 
 
   useEffect(() => {
-    onChangAddress({cityCode, districtCode, wardCode})
+    onChangAddress({cityCode:+cityCode, districtCode:+districtCode, wardCode:+wardCode})
   }, [cityCode, districtCode, wardCode ])
   return (
     <div className="container">

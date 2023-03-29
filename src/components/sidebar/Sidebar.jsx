@@ -1,23 +1,20 @@
-import "./sidebar.scss";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
-import StoreIcon from "@mui/icons-material/Store";
-import InsertChartIcon from "@mui/icons-material/InsertChart";
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
-import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import { Link } from "react-router-dom";
+import { Fragment, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
-import { useContext } from "react";
 import { routes } from "../../routes";
-
+import "./sidebar.scss";
 const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
+  const path = window.location.pathname
+  console.log('====================================');
+  console.log({ path });
+  console.log('====================================');
+  const navigate = useNavigate();
+  const handleLogout=()=>{
+    localStorage.removeItem('accessToken');
+    navigate("/login");
+  }
   return (
     <div className="sidebar">
       <div className="top">
@@ -28,20 +25,27 @@ const Sidebar = () => {
       <hr />
       <div className="center">
         <ul>
-        {routes.map((route) => (
-        <>
-          <li>{route.title}</li>
-          {route.items.map((item) => (
-            <Link to={item.to} style={{ textDecoration: "none" }} key={item.label}>
-              <li>
-                {item.icon}
-                <span>{item.label}</span>
-              </li>
-            </Link>
+          {routes.map((route) => (
+            <Fragment key={route.title}>
+              <li>{route.title}</li>
+              {route.items.map((item) => {
+                // if(item.auth!='super_admin')
+                return (
+                  <Link to={item.to} style={{ textDecoration: "none" }} key={item.label}>
+                    <li className={path === item.to ?'active':''}>
+                      {item.icon}
+                      <span>{item.label}</span>
+                    </li>
+                  </Link>
+                )
+              })}
+            </Fragment>
           ))}
-        </>
-      ))}
-         
+
+            <li onClick={handleLogout}>
+            <ExitToAppIcon className="icon" />
+              <span>Logout</span>
+            </li>
         </ul>
       </div>
       <div className="bottom">
