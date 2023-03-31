@@ -58,10 +58,17 @@ export const routes = [
         to: "/service-group",
         auth: 'admin'
       },
+    
       {
         icon: <RoomServiceOutlinedIcon className="icon" />,
         label: "Quản lý dịch vụ",
         to: "/service",
+        auth: 'admin'
+      },
+      {
+        icon: <RoomServiceOutlinedIcon className="icon" />,
+        label: "Quản lý lịch hẹn",
+        to: "/booking",
         auth: 'admin'
       },
  

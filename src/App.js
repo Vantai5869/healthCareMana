@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { DarkModeContext } from "./context/darkModeContext";
 import { productInputs, userInputs } from "./formSource";
+import Booking from "./pages/bookings/Booking";
 import Branchs from "./pages/branchs/Branchs";
 import CreateBranchForm from "./pages/branchs/CreateBranch";
 import Home from "./pages/home/Home";
@@ -46,6 +47,14 @@ function App() {
             </Route>
             <Route path="service">
               <Route index element={<ServicePage />} />
+              <Route path=":userId" element={<Single />} />
+              <Route
+                path="new"
+                element={<CreateService title="Add New User" />}
+              />
+            </Route>
+            <Route path="booking">
+              <Route index element={<Booking />} />
               <Route path=":userId" element={<Single />} />
               <Route
                 path="new"
