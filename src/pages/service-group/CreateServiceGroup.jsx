@@ -16,20 +16,20 @@ const CreateServiceGroup = () => {
     const { currentUser } = useCurrentUser();
     const { data } = useQuery(FIND_ALL_BRANCHES_BY_MERCHANT, {
         variables: { merchantId: currentUser?.merchants.edges[0].node.id },
-      });
+    });
 
-      useEffect(() => {
+    useEffect(() => {
         const tmp = data ? data.findAllBranchesByMerchant.edges.map(
-          i =>({
-            label: i.node.name,
-            value: i.node.id,
-          }) 
+            i => ({
+                label: i.node.name,
+                value: i.node.id,
+            })
         ) : []
         setBranch(tmp)
-      }, [data])
-      console.log('====================================');
-      console.log({branchs});
-      console.log('====================================');
+    }, [data])
+    console.log('====================================');
+    console.log({ branchs });
+    console.log('====================================');
     console.log({ currentUser })
     const [formData, setFormData] = useState({
         name: '',
@@ -42,20 +42,20 @@ const CreateServiceGroup = () => {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        if(name=='showType'){
+        if (name == 'showType') {
             setFormData((prevData) => ({
                 ...prevData,
                 [name]: +value,
             }));
-        }else
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
+        } else
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: value,
+            }));
     };
 
     console.log('====================================');
-    console.log({formData});
+    console.log({ formData });
     console.log('====================================');
 
     const handleSubmit = (event) => {
@@ -79,6 +79,13 @@ const CreateServiceGroup = () => {
         }));
         setSelectedBranchId(e.value);
     };
+
+    const handleChangeShowType = (e) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            showType: e.value,
+        }));
+    }
     return (
         <Layout>
             <Container maxWidth="md" style={{ marginTop: 30 }}>
@@ -113,7 +120,7 @@ const CreateServiceGroup = () => {
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={12}>
+                            {/* <Grid item xs={12}>
                                 <TextField
                                     required
                                     fullWidth
@@ -127,19 +134,29 @@ const CreateServiceGroup = () => {
                                         style: { fontSize: 14 }
                                     }}
                                 />
-                            </Grid>
-                            <div style={{width: '90%', padding:10}}>
-                                <span> Chọn chi nhánh</span>
-                            <Select
-                                options={branchs}
-                                onChange={handleTypeSelect}
-                                value={branchs.filter(function (option) {
-                                    return option.value === selectedBranchId;
-                                })}
-                                label="Single select"
-                            />
+                            </Grid> */}
+                            <div style={{ width: '90%', padding: 10 }}>
+                                <span> Loại hiển thị</span>
+                                <Select
+                                    name='showType'
+                                    options={[{ value: 'both_in_screen', label: 'both_in_screen' }, { value: 'only_cashier', label: 'only_cashier' }, , { value: 'only_booking', label: 'only_booking' }, , { value: 'not_at_all', label: 'not_at_all' },]}
+                                    onChange={handleChangeShowType}
+                                />
                             </div>
-                         
+
+
+                            <div style={{ width: '90%', padding: 10 }}>
+                                <span> Chọn chi nhánh</span>
+                                <Select
+                                    options={branchs}
+                                    onChange={handleTypeSelect}
+                                    value={branchs.filter(function (option) {
+                                        return option.value === selectedBranchId;
+                                    })}
+                                    label="Single select"
+                                />
+                            </div>
+
                             <Grid item xs={12}>
                                 <Button type="submit" variant="contained" color="primary" disabled={loading} fullWidth>
                                     {loading ? 'Đang thêm...' : 'Tạo mới'}
