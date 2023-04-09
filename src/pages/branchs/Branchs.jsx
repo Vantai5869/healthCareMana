@@ -15,6 +15,9 @@ import './styles.scss';
 const Branchs = () => {
   const [branchs, setBranch] = useState([]);
   const {currentUser} = useCurrentUser();
+  console.log('====================================');
+  console.log({currentUser});
+  console.log('====================================');
   const [updateBranch, { loading: updateLoading, error: updateError }] = useMutation(UPDATE_BRANCH);
   const [deleteBranch, { loading: deleteLoading, error: deleteError }] = useMutation(DELETE_BRANCH);
   const [currentBranch, setCurrentBranch] = useState({});

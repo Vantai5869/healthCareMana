@@ -9,7 +9,7 @@ import Branchs from "./pages/branchs/Branchs";
 import CreateBranchForm from "./pages/branchs/CreateBranch";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
-import New from "./pages/new/New";
+import New from "./pages/users/new/New";
 import List from "./pages/products/List";
 import CreateServiceGroup from "./pages/service-group/CreateServiceGroup";
 import ServiceGroupPage from "./pages/service-group/ServiceGroupPage";
