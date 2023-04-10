@@ -1,18 +1,18 @@
 import { formatPrice } from "../../helper/helper";
 
 export const Columns = [
-  { field: "id", headerName: "ID", width: 70 },
+  { field: "id", headerName: "ID", width: 100 },
 
   {
     field: "name",
     headerName: "Tên Chi nhánh",
-    width: 280,
+    width: 300,
   },
 
   {
     field: "phone",
     headerName: "Số điện thoại",
-    width: 200,
+    width: 300,
   },
   {
     field: "address",

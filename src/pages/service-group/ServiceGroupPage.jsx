@@ -12,6 +12,7 @@ import { FIND_ALL_SERVICE_GROUP } from '../../gql/service-group';
 import useCurrentUser from '../../stores/actions/useCurrentUser';
 import { Columns } from './source';
 import './styles.scss';
+import Loading from '../../components/loading/Loading';
 
 const ServiceGroupPage = () => {
   const [branchs, setBranch] = useState([]);
@@ -118,7 +119,7 @@ const ServiceGroupPage = () => {
     <Layout>
       <div className='branch'>
         {
-          loading ? <p>Loading...</p> :
+          loading ? <Loading/> :
             <TableLayout linkAddNew="/service-group/new">
               <DataGrid
                 className="datagrid"

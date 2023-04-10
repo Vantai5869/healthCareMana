@@ -7,9 +7,7 @@ import "./sidebar.scss";
 const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
   const path = window.location.pathname
-  console.log('====================================');
-  console.log({ path });
-  console.log('====================================');
+
   const navigate = useNavigate();
   const handleLogout=()=>{
     localStorage.removeItem('accessToken');
@@ -19,7 +17,7 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="top">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <span className="logo">lamadmin</span>
+          <span className="logo">HealthSalon</span>
         </Link>
       </div>
       <hr />
@@ -29,7 +27,6 @@ const Sidebar = () => {
             <Fragment key={route.title}>
               <li>{route.title}</li>
               {route.items.map((item) => {
-                // if(item.auth!='super_admin')
                 return (
                   <Link to={item.to} style={{ textDecoration: "none" }} key={item.label}>
                     <li className={path === item.to ?'active':''}>

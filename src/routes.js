@@ -13,6 +13,7 @@ import StoreIcon from "@mui/icons-material/Store";
 import RoomServiceOutlinedIcon from '@mui/icons-material/RoomServiceOutlined';
 import UsersList from "./pages/users/Users";
 import Single from "./pages/single/Single";
+import { IconBranch, IconDelivery, IconSchedule, IconService, IconServiceGroup, IconUser } from "./assets/icons";
 
 export const routes = [
   {
@@ -22,7 +23,7 @@ export const routes = [
     title: "LISTS",
     items: [
       {
-        icon: <PersonOutlineIcon className="icon" />,
+        icon: <IconUser className="icon" />,
         label: "Người dùng",
         to: "/users",
         auth: 'super_admin',
@@ -47,26 +48,26 @@ export const routes = [
         ]
       },
       {
-        icon: <RoomServiceOutlinedIcon className="icon" />,
+        icon: <IconBranch className="icon" />,
         label: "Quản lý chi nhánh",
         to: "/branch",
         auth: 'admin'
       },
       {
-        icon: <RoomServiceOutlinedIcon className="icon" />,
+        icon: <IconServiceGroup className="icon" />,
         label: "Quản lý nhóm dịch vụ",
         to: "/service-group",
         auth: 'admin'
       },
     
       {
-        icon: <RoomServiceOutlinedIcon className="icon" />,
+        icon: <IconService className="icon" />,
         label: "Quản lý dịch vụ",
         to: "/service",
         auth: 'admin'
       },
       {
-        icon: <RoomServiceOutlinedIcon className="icon" />,
+        icon: <IconSchedule className="icon" />,
         label: "Quản lý lịch hẹn",
         to: "/booking",
         auth: 'admin'
@@ -85,68 +86,68 @@ export const routes = [
         auth: 'admin'
       },
       {
-        icon: <CreditCardIcon className="icon" />,
+        icon: <PersonOutlineIcon className="icon" />,
         label: "Nhân viên",
         to: "/staff",
         auth: 'admin'
       },
-      {
-        icon: <LocalShippingIcon className="icon" />,
-        label: "Vận chuyển",
-        to: "/delivery",
-        auth: 'admin'
-      }
+      // {
+      //   icon: <IconDelivery className="icon" />,
+      //   label: "Vận chuyển",
+      //   to: "/delivery",
+      //   auth: 'admin'
+      // }
     ]
   },
-  {
-    title: "USEFUL",
-    items: [
-      {
-        icon: <InsertChartIcon className="icon" />,
-        label: "Stats",
-        to: "/stats",
-        auth: 'admin'
-      },
-      {
-        icon: <NotificationsNoneIcon className="icon" />,
-        label: "Notifications",
-        to: "/notifications",
-        auth: 'admin'
-      }
-    ]
-  },
-  {
-    title: "SERVICE",
-    items: [
-      {
-        icon: <SettingsSystemDaydreamOutlinedIcon className="icon" />,
-        label: "System Health",
-        to: "/system-health",
-        auth: 'admin'
-      },
-      {
-        icon: <PsychologyOutlinedIcon className="icon" />,
-        label: "Logs",
-        to: "/logs",
-        auth: 'admin'
-      },
-      {
-        icon: <SettingsApplicationsIcon className="icon" />,
-        label: "Settings",
-        to: "/settings",
-        auth: 'admin'
-      }
-    ]
-  },
+  // {
+  //   title: "USEFUL",
+  //   items: [
+  //     {
+  //       icon: <InsertChartIcon className="icon" />,
+  //       label: "Stats",
+  //       to: "/stats",
+  //       auth: 'admin'
+  //     },
+  //     {
+  //       icon: <NotificationsNoneIcon className="icon" />,
+  //       label: "Notifications",
+  //       to: "/notifications",
+  //       auth: 'admin'
+  //     }
+  //   ]
+  // },
+  // {
+  //   title: "SERVICE",
+  //   items: [
+  //     {
+  //       icon: <SettingsSystemDaydreamOutlinedIcon className="icon" />,
+  //       label: "System Health",
+  //       to: "/system-health",
+  //       auth: 'admin'
+  //     },
+  //     {
+  //       icon: <PsychologyOutlinedIcon className="icon" />,
+  //       label: "Logs",
+  //       to: "/logs",
+  //       auth: 'admin'
+  //     },
+  //     {
+  //       icon: <SettingsApplicationsIcon className="icon" />,
+  //       label: "Settings",
+  //       to: "/settings",
+  //       auth: 'admin'
+  //     }
+  //   ]
+  // },
   {
     title: "USER",
     items: [
-      {
-        icon: <AccountCircleOutlinedIcon className="icon" />,
-        label: "Profile",
-        to: "/profile",
-        auth: 'admin'
-      },
+      // {
+      //   icon: <AccountCircleOutlinedIcon className="icon" />,
+      //   label: "Profile",
+      //   to: "/profile",
+      //   auth: 'admin'
+      // },
       // {
       //   icon: <ExitToAppIcon className="icon" />,
       //   label: "Logout",

@@ -4,6 +4,7 @@ import useCurrentUser from '../../stores/actions/useCurrentUser';
 import { selectCurrentUser } from '../../stores/user.reducer';
 import './login.scss';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../../components/loading/Loading';
 
 
 function LoginPage() {
@@ -23,9 +24,7 @@ function LoginPage() {
   }
 
   if(loading){
-    return <>
-   loading
-    </>
+    return <Loading/>
   }
   if(data){
     localStorage.setItem('accessToken', data.login.accessToken);

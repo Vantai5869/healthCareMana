@@ -11,6 +11,7 @@ import { DELETE_BRANCH, FIND_ALL_BRANCHES_BY_MERCHANT, UPDATE_BRANCH } from "../
 import useCurrentUser from '../../stores/actions/useCurrentUser';
 import { Columns } from './source';
 import './styles.scss';
+import Loading from '../../components/loading/Loading';
 
 const Branchs = () => {
   const [branchs, setBranch] = useState([]);
@@ -121,7 +122,7 @@ const Branchs = () => {
     <Layout>
       <div className='branch'>
         {
-          loading ? <p>Loading...</p> :
+          loading ?<Loading color="#ccc" type={'spin'} /> :
             <TableLayout linkAddNew="/branch/new">
               <DataGrid
                 className="datagrid"
