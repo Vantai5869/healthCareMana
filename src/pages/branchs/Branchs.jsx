@@ -12,8 +12,11 @@ import useCurrentUser from '../../stores/actions/useCurrentUser';
 import { Columns } from './source';
 import './styles.scss';
 import Loading from '../../components/loading/Loading';
+import ModalAdd from '../../components/ModalAdd/ModalAdd';
+import AddBranch from './CreateBranch';
 
 const Branchs = () => {
+  const [isShowModal, setIsShowModal] = useState();
   const [branchs, setBranch] = useState([]);
   const {currentUser} = useCurrentUser();
   console.log('====================================');
@@ -22,7 +25,7 @@ const Branchs = () => {
   const [updateBranch, { loading: updateLoading, error: updateError }] = useMutation(UPDATE_BRANCH);
   const [deleteBranch, { loading: deleteLoading, error: deleteError }] = useMutation(DELETE_BRANCH);
   const [currentBranch, setCurrentBranch] = useState({});
-  const { loading, error, data } = useQuery(FIND_ALL_BRANCHES_BY_MERCHANT, {
+  const { loading, error, data, refetch } = useQuery(FIND_ALL_BRANCHES_BY_MERCHANT, {
     
     variables: { merchantId: currentUser?.merchants.edges[0].node.id },
   });
@@ -52,12 +55,15 @@ const Branchs = () => {
   const handleDelete = (id) => {
     deleteBranch({ variables: { id: id } }).then(() => {
       toast("Xóa chi nhánh thành công!")
-      window.location.reload()
+      refetch();
     })
       .catch((error) => {
         console.log(`Error creating branch: ${error}`);
       });
   }
+  const handleShowModal = () => {
+    setIsShowModal(!isShowModal);
+  };
 
   const handleUpdateBranch = () => {
     updateBranch({
@@ -71,7 +77,7 @@ const Branchs = () => {
     })
       .then(() => {
         toast("Cập nhật chi nhánh thành công!")
-        window.location.reload()
+        refetch();
         console.log('Branch updated successfully!');
       })
       .catch((error) => {
@@ -123,7 +129,7 @@ const Branchs = () => {
       <div className='branch'>
         {
           loading ?<Loading color="#ccc" type={'spin'} /> :
-            <TableLayout linkAddNew="/branch/new">
+            <TableLayout linkAddNew="/branch/new"  onClickAddNew={handleShowModal}>
               <DataGrid
                 className="datagrid"
                 rows={branchs}
@@ -137,6 +143,11 @@ const Branchs = () => {
         }
 
       </div>
+      <ModalAdd isModal={isShowModal} setOpenModals={handleShowModal}>
+        <div className="booking_add_new">
+          <AddBranch onCreated={refetch}/>
+        </div>
+      </ModalAdd>
     </Layout>
   )
 }

@@ -13,14 +13,17 @@ import useCurrentUser from '../../stores/actions/useCurrentUser';
 import { Columns } from './source';
 import './styles.scss';
 import Loading from '../../components/loading/Loading';
+import ModalAdd from '../../components/ModalAdd/ModalAdd';
+import CreateServiceGroup from './CreateServiceGroup';
 
 const ServiceGroupPage = () => {
+  const [isShowModal, setIsShowModal] = useState();
   const [branchs, setBranch] = useState([]);
   const {currentUser} = useCurrentUser();
   const [updateBranch, { loading: updateLoading, error: updateError }] = useMutation(UPDATE_BRANCH);
   const [deleteBranch, { loading: deleteLoading, error: deleteError }] = useMutation(DELETE_BRANCH);
   const [currentBranch, setCurrentBranch] = useState({});
-  const { loading, error, data } = useQuery(FIND_ALL_SERVICE_GROUP, {
+  const { loading, error, data, refetch } = useQuery(FIND_ALL_SERVICE_GROUP, {
     variables: { merchantId: currentUser?.merchants.edges[0].node.id },
   });
 
@@ -46,10 +49,11 @@ const ServiceGroupPage = () => {
     }))
   }
 
+
   const handleDelete = (id) => {
     deleteBranch({ variables: { id: id } }).then(() => {
       toast("Xóa chi nhánh thành công!")
-      window.location.reload()
+      refetch()
     })
       .catch((error) => {
         console.log(`Error creating branch: ${error}`);
@@ -68,13 +72,17 @@ const ServiceGroupPage = () => {
     })
       .then(() => {
         toast("Cập nhật chi nhánh thành công!")
-        window.location.reload()
+        refetch()
         console.log('Branch updated successfully!');
       })
       .catch((error) => {
         console.log(`Error creating branch: ${error}`);
       });
   }
+
+  const handleShowModal = () => {
+    setIsShowModal(!isShowModal);
+  };
 
   const actionColumn = [
     {
@@ -120,7 +128,7 @@ const ServiceGroupPage = () => {
       <div className='branch'>
         {
           loading ? <Loading/> :
-            <TableLayout linkAddNew="/service-group/new">
+            <TableLayout linkAddNew="/service-group/new"  onClickAddNew={handleShowModal}>
               <DataGrid
                 className="datagrid"
                 rows={branchs}
@@ -134,6 +142,11 @@ const ServiceGroupPage = () => {
         }
 
       </div>
+      <ModalAdd isModal={isShowModal} setOpenModals={handleShowModal}>
+        <div className="booking_add_new">
+          <CreateServiceGroup onCreated={refetch}/>
+        </div>
+      </ModalAdd>
     </Layout>
   )
 }

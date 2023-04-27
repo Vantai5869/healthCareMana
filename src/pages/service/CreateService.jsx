@@ -10,7 +10,8 @@ import { CREATE_SERVICE_GROUP } from '../../gql/service';
 import { FIND_ALL_SERVICE_GROUP } from '../../gql/service-group';
 import useCurrentUser from '../../stores/actions/useCurrentUser';
 import useUploadFile from '../../stores/actions/useUpload';
-const CreateService = () => {
+import Input from '../../components/Input/Input';
+const CreateService = ({onCreated}) => {
     const [branchs, setBranch] = useState([]);
     const [selectedBranchId, setSelectedBranchId] = useState();
     const navigate = useNavigate()
@@ -51,7 +52,7 @@ const CreateService = () => {
         canPrintHouseInInvoice: false,
     });
 
-    const [createServiceGroup, { loading, error }] = useMutation(CREATE_SERVICE_GROUP);
+    const [createServiceGroup, { loading, error, data: dataAdded }] = useMutation(CREATE_SERVICE_GROUP);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -81,8 +82,8 @@ const CreateService = () => {
         if (dataUpload) {
             createServiceGroup({ variables: { data:{...formData, image: dataUpload.uploadSingleFiles.url} } })
                 .then(() => {
-                    toast("Tạo thành công!")
-                    navigate('/service')
+                    toast("Tạo thành công!");
+                    onCreated()
                 })
                 .catch((error) => {
                     toast("Có lỗi xảy ra")
@@ -114,14 +115,14 @@ const CreateService = () => {
     }
 
     return (
-        <Layout>
+        // <Layout>
             <div className="service">
                 <Container maxWidth="md" style={{ marginTop: 30 }}>
-                    <Paper elevation={3} style={{ padding: '20px' }}>
+                    <Paper elevation={3} style={{ padding: '30px' }}>
                         <form onSubmit={handleSubmit}>
                             <Grid container spacing={3}>
-                                <div style={{ width: '90%', padding: 10 }}>
-                                    <span> Chọn nhóm dịch vụ</span>
+                                <div style={{ width: '100%', padding: 10 }}>
+                                    <span className='label'> Chọn nhóm dịch vụ</span>
                                     <Select
                                         options={branchs}
                                         onChange={handleTypeSelect}
@@ -133,6 +134,12 @@ const CreateService = () => {
                                 </div>
 
                                 <Grid item xs={12}>
+                                    {/* <Input 
+                                        label={"Tên dịch vụ"}
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                        required={true}
+                                    /> */}
                                     <TextField
                                         required
                                         fullWidth
@@ -247,16 +254,16 @@ const CreateService = () => {
                                     />
                                 </Grid> */}
 
-                                <div style={{ width: '90%', padding: 10 }}>
-                                    <span> Trạng thái</span>
+                                <div style={{ width: '100%', padding: 10 }}>
+                                    <span className='label'> Trạng thái</span>
                                     <Select
                                         name='status'
                                         options={[{ value: 'active', label: 'active' }, { value: 'pending', label: 'pending' },]}
                                         onChange={handleChangeStatus}
                                     />
                                 </div>
-                                <div style={{ width: '90%', padding: 10 }}>
-                                    <span> Loại hiển thị</span>
+                                <div style={{ width: '100%', padding: 10 }}>
+                                    <span className='label'> Loại hiển thị</span>
                                     <Select
                                         name='showType'
                                         options={[{ value: 'both_in_screen', label: 'both_in_screen' }, { value: 'only_cashier', label: 'only_cashier' }, , { value: 'only_booking', label: 'only_booking' }, , { value: 'not_at_all', label: 'not_at_all' },]}
@@ -278,7 +285,7 @@ const CreateService = () => {
                                     <div className="right">
                                         <div className="formInput">
                                             <label htmlFor="file">
-                                                Image: <DriveFolderUploadOutlinedIcon className="icon" />
+                                                Tải ảnh lên: <DriveFolderUploadOutlinedIcon className="icon" />
                                             </label>
                                             <input
                                                 type="file"
@@ -300,7 +307,7 @@ const CreateService = () => {
                     </Paper>
                 </Container>
             </div>
-        </Layout>
+        // </Layout>
 
     );
 };

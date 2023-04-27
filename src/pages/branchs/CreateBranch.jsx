@@ -7,7 +7,7 @@ import LocationSelector from "../../components/addressSelect";
 import useCurrentUser from '../../stores/actions/useCurrentUser';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-const AddBranch = () => {
+const AddBranch = ({onCreated}) => {
     const navigate = useNavigate()
     const { currentUser } = useCurrentUser();
     console.log({ currentUser })
@@ -56,8 +56,7 @@ const AddBranch = () => {
         createBranch({ variables: { data: formData } })
             .then(() => {
                 toast("Tạo branch thành công!")
-                navigate('/branch')
-                console.log('Branch created successfully!');
+                onCreated()
             })
             .catch((error) => {
                 console.log(`Error creating branch: ${error}`);
@@ -65,7 +64,7 @@ const AddBranch = () => {
     };
 
     return (
-        <Layout>
+        // <Layout>
             <Container maxWidth="md" style={{ marginTop: 30 }}>
                 <Paper elevation={3} style={{ padding: '20px' }}>
                     <form onSubmit={handleSubmit}>
@@ -171,7 +170,9 @@ const AddBranch = () => {
                             <Grid item xs={12}>
                                 <TextField fullWidth label="Ward Code" name="wardCode" value={formData.wardCode} onChange={handleChange} />
                             </Grid> */}
+                            <Grid item xs={12}>
                             <LocationSelector onChangAddress={handleChangeAddress} />
+                            </Grid>
                             <Grid item xs={12}>
                                 <Button type="submit" variant="contained" color="primary" disabled={loading} fullWidth>
                                     {loading ? 'Đang thêm...' : 'Tạo branch'}
@@ -181,7 +182,7 @@ const AddBranch = () => {
                     </form>
                 </Paper>
             </Container>
-        </Layout>
+        // </Layout>
 
     );
 };
